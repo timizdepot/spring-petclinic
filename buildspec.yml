@@ -3,7 +3,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
+<<<<<<< HEAD
       java: openjdk8
+=======
+      java: corretto11
+>>>>>>> 4df5ed5abd4dc1cd8212a3f086b508089045f570
   pre_build:
     commands:
       - AWS_ACC=$(echo $CODEBUILD_BUILD_ARN | cut -d':' -f5)
@@ -26,6 +30,14 @@ phases:
       - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
       - echo {\"repo\":\"${REPO}\"} > repo.json
       - printf '[{"name":"petclinic", "imageUri":"%s:%s"}]' $ECR_REPOSITORY_URI $IMAGE_TAG > imagedefinitions.json
+<<<<<<< HEAD
+=======
+reports:
+  SurefireReports:
+    files:
+      - '**/*'
+    base-directory: 'target/surefire-reports'
+>>>>>>> 4df5ed5abd4dc1cd8212a3f086b508089045f570
 artifacts:
   files:
     - target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar
