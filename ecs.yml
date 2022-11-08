@@ -2,14 +2,18 @@ AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
   DesiredCapacity:
     Type: Number
-    Default: 2
+    Default: 1
     Description: Number of instances to launch in your ECS cluster.
+  TaskSize:
+    Type: Number
+    Default: 10
+    Description: Number of service task to launch in your ECS cluster.
   Repo:
     Type: String
     Description: Repo for docker container.
   MaxSize:
     Type: Number
-    Default: 3
+    Default: 1
     Description: Maximum number of instances that can be launched in your ECS cluster.
   InstanceType:
     Description: EC2 instance type
@@ -378,7 +382,7 @@ Resources:
     Properties:
       Cluster: !Ref 'ECSCluster'
       ServiceName: petclinic
-      DesiredCount: 1
+      DesiredCount: !Ref 'TaskSize'
       LoadBalancers:
       - ContainerName: petclinic
         ContainerPort: 8080
