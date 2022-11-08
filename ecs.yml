@@ -15,6 +15,10 @@ Parameters:
     Type: Number
     Default: 2
     Description: Maximum number of instances that can be launched in your ECS cluster.
+  CertArn:
+    Type: String
+    Description: 'The https listener certificate arn.'
+    Default: "arn:aws:acm:us-east-1:307475751203:certificate/35be0576-d8b7-443f-aa9d-65e4aa1cd102"
   InstanceType:
     Description: EC2 instance type
     Type: String
@@ -286,7 +290,7 @@ Resources:
       Family: !Join ['', [!Ref 'AWS::StackName', -ecs-spring-petclinic]]
       ContainerDefinitions:
       - Name: petclinic
-        Cpu: 10
+        Cpu: 100
         Essential: true
         Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${Repo}:latest'
         Memory: 300
@@ -321,8 +325,26 @@ Resources:
       - Type: forward
         TargetGroupArn: !Ref 'ECSTG'
       LoadBalancerArn: !Ref 'ECSALB'
-      Port: 8080
-      Protocol: HTTP
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: !Ref CertArn
+  HTTPlistener:
+   Type: "AWS::ElasticLoadBalancingV2::Listener"
+   Properties:
+     DefaultActions:
+       - Type: "redirect"
+         RedirectConfig:
+           Protocol: "HTTPS"
+           Port: 443
+           Host: "#{host}"
+           Path: "/#{path}"
+           Query: "#{query}"
+           StatusCode: "HTTP_301"
+     LoadBalancerArn: !Ref 'ECSALB'
+     Port: 8080
+     Protocol: "HTTP"
+
   ECSALBListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     DependsOn: ALBListener
