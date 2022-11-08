@@ -6,14 +6,14 @@ Parameters:
     Description: Number of instances to launch in your ECS cluster.
   TaskSize:
     Type: Number
-    Default: 10
+    Default: 3
     Description: Number of service task to launch in your ECS cluster.
   Repo:
     Type: String
     Description: Repo for docker container.
   MaxSize:
     Type: Number
-    Default: 1
+    Default: 2
     Description: Maximum number of instances that can be launched in your ECS cluster.
   InstanceType:
     Description: EC2 instance type
