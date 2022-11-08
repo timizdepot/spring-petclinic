@@ -21,7 +21,7 @@ Parameters:
     Default: 8080
   MaxSize:
     Type: Number
-    Default: 2
+    Default: 3
     Description: Maximum number of instances that can be launched in your ECS cluster.
   CertArn:
     Type: String
@@ -61,7 +61,7 @@ Resources:
   VPC:
       Type: AWS::EC2::VPC
       Properties:
-        CidrBlock: 10.0.0.0/16
+        CidrBlock: 10.3.0.0/16
         Tags:
           - Key: Application
             Value: 
@@ -71,7 +71,7 @@ Resources:
     Properties:
       VpcId: 
         Ref: 'VPC'
-      CidrBlock: 10.0.0.0/24
+      CidrBlock: 10.3.0.0/24
       MapPublicIpOnLaunch: True
       AvailabilityZone:
         Fn::Select:
@@ -86,7 +86,7 @@ Resources:
     Properties:
       VpcId: 
         Ref: 'VPC'
-      CidrBlock: 10.0.1.0/24
+      CidrBlock: 10.3.1.0/24
       MapPublicIpOnLaunch: True
       AvailabilityZone:
         Fn::Select:
@@ -101,7 +101,7 @@ Resources:
     Properties:
       VpcId: 
         Ref: 'VPC'
-      CidrBlock: 10.0.2.0/24
+      CidrBlock: 10.3.2.0/24
       MapPublicIpOnLaunch: False
       AvailabilityZone:
         Fn::Select:
@@ -116,7 +116,7 @@ Resources:
     Properties:
       VpcId: 
         Ref: 'VPC'
-      CidrBlock: 10.0.3.0/24
+      CidrBlock: 10.3.3.0/24
       MapPublicIpOnLaunch: False
       AvailabilityZone:
         Fn::Select:
@@ -374,7 +374,7 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
-      TargetType: ip
+      # TargetType: ip
       Name: !Ref ServiceName
       Port: !Ref ContainerPort
       Protocol: HTTP
