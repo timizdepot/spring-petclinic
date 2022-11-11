@@ -382,7 +382,7 @@ Resources:
     Properties:
       Cluster: !Ref 'ECSCluster'
       ServiceName: petclinic
-      DesiredCount: 3
+      DesiredCount: 1
       LoadBalancers:
       - ContainerName: petclinic
         ContainerPort: 8080
