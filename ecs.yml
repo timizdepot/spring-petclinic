@@ -13,7 +13,7 @@ Parameters:
     Default: "ec2"
   MaxSize:
     Type: Number
-    Default: 1
+    Default: 3
     Description: Maximum number of instances that can be launched in your ECS cluster.
   InstanceType:
     Description: EC2 instance type
@@ -382,7 +382,7 @@ Resources:
     Properties:
       Cluster: !Ref 'ECSCluster'
       ServiceName: petclinic
-      DesiredCount: 1
+      DesiredCount: 3
       LoadBalancers:
       - ContainerName: petclinic
         ContainerPort: 8080
@@ -412,8 +412,8 @@ Resources:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     DependsOn: service
     Properties:
-      MaxCapacity: 2
-      MinCapacity: 1
+      MaxCapacity: 9
+      MinCapacity: 0
       ResourceId: !Join ['', [service/, !Ref 'ECSCluster', /, !GetAtt [service, Name]]]
       RoleARN: !GetAtt [AutoscalingRole, Arn]
       ScalableDimension: ecs:service:DesiredCount
