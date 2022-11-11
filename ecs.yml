@@ -7,6 +7,10 @@ Parameters:
   Repo:
     Type: String
     Description: Repo for docker container.
+  KeyName:
+    Type: String
+    Description: EC2 keypair name.
+    Default: "ec2"
   MaxSize:
     Type: Number
     Default: 1
@@ -365,7 +369,7 @@ Resources:
       SecurityGroups: [!Ref 'EcsSecurityGroup']
       InstanceType: !Ref 'InstanceType'
       IamInstanceProfile: !Ref 'EC2InstanceProfile'
-      KeyName: 'dansweet'
+      KeyName: !Ref KeyName
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
