@@ -11,6 +11,10 @@ Parameters:
     Type: String
     Description: EC2 keypair name.
     Default: "ec2"
+  DesiredTask:
+    Type: Number
+    Description: ECS Service desired task size.
+    Default: 1
   MaxSize:
     Type: Number
     Default: 3
@@ -382,7 +386,7 @@ Resources:
     Properties:
       Cluster: !Ref 'ECSCluster'
       ServiceName: petclinic
-      DesiredCount: 1
+      DesiredCount: !Ref 'DesiredTask'
       LoadBalancers:
       - ContainerName: petclinic
         ContainerPort: 8080
